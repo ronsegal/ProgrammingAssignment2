@@ -6,6 +6,8 @@
 ## a symbol in a containing environment rather than to the calculating function's local environment
 ## Consequently on subsequent calls to the calculating function if this cached result exists
 ## it is used rather than re-calculating the inversion.
+## The approach makes use of the superassignment operator
+## described here: http://bio-statistician.com/use-the-superassignment-operator.html
 
 ## Write a short comment describing this function
 
@@ -16,11 +18,11 @@
 
 makeCacheMatrix <- function(x = matrix()) {
 
-    inv <- NULL # initialise local declaration of inversion result
+    inv <- NULL # initialise inversion result variable in makeCacheMatrix function environment
 
     getdata <- function() x # return the matrix object to be inverted
     setinvert <- function(invmat) inv <<- invmat # cache the inverted matrix result in parent environment
-    getinvert <- function() inv # return local (NULL) or the cached inverted matrix result from parent environment
+    getinvert <- function() inv # return NULL or the cached inverted matrix result from parent environment
 
     list(getdata = getdata, setinvert = setinvert, getinvert = getinvert) # return list of functions with same names
 
